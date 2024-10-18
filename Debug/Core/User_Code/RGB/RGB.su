@@ -1,0 +1,6 @@
+../Core/User_Code/RGB/RGB.c:11:6:update_RGB	32	static
+../Core/User_Code/RGB/RGB.c:21:6:set_RGB	104	static
+../Core/User_Code/RGB/RGB.c:27:6:setPWM_normal_timer	40	static
+../Core/User_Code/RGB/RGB.c:41:10:saturate_color	16	static
+../Core/User_Code/RGB/RGB.c:50:14:xy_to_RGB	72	static
+../Core/User_Code/RGB/RGB.c:85:6:set_color_xy	32	static
