@@ -39,6 +39,7 @@
 #include "zcl/general/zcl.onoff.h"
 #include "zcl/general/zcl.color.h"
 #include "zcl/general/zcl.level.h"
+#include "zcl/general/zcl.wcm.h"
 
 /* USER CODE BEGIN Includes */
 #include "../../Core/User_Code/RGB/RGB.h"
@@ -53,8 +54,11 @@
 #define CHANNEL                                     11
 
 #define SW1_ENDPOINT                                20
+#define SW2_ENDPOINT                                21
 
 /* USER CODE BEGIN PD */
+#define HUMIDITY_MIN_2 0
+#define HUMIDITY_MAX_2 100
 /* USER CODE END PD */
 
 /* Private macros ------------------------------------------------------------*/
@@ -83,6 +87,18 @@ static void APP_ZIGBEE_ProcessNotifyM0ToM4(void);
 static void APP_ZIGBEE_ProcessRequestM0ToM4(void);
 
 /* USER CODE BEGIN PFP */
+void APP_ZIGBEE_ConfigBasicServer(void);
+
+/* Defines for Basic Cluster Server */
+#define APP_ZIGBEE_MFR_NAME                         "Valentin"
+#define APP_ZIGBEE_CHIP_NAME                        "Valentin88"
+#define APP_ZIGBEE_CHIP_VERSION                     0x10        // Cut 1.0
+#define APP_ZIGBEE_BOARD_POWER                      0x00        // No Power
+
+#define APP_ZIGBEE_APP_DATE_CODE                    "20241021"
+#define APP_ZIGBEE_APP_BUILD_ID                     "V1.0-A69"
+#define APP_ZIGBEE_APP_VERSION                      0x10        // Application Version v1.0
+#define APP_ZIGBEE_STACK_VERSION                    0x10        // Stack Version v1.0
 /* USER CODE END PFP */
 
 /* Private variables ---------------------------------------------------------*/
@@ -110,6 +126,8 @@ struct zigbee_app_info
   struct ZbZclClusterT *onOff_server_1;
   struct ZbZclClusterT *colorControl_server_1;
   struct ZbZclClusterT *levelControl_server_1;
+  struct ZbZclClusterT *basic_client_2;
+  struct ZbZclClusterT *water_content_server_2;
 };
 static struct zigbee_app_info zigbee_app_info;
 
@@ -143,6 +161,9 @@ static struct ZbZclLevelServerCallbacksT LevelServerCallbacks_1 =
 
 /* USER CODE BEGIN PV */
 struct RGB_object_t RGB = {0};
+int test = 0;
+int test1 = 10;
+
 /* USER CODE END PV */
 /* Functions Definition ------------------------------------------------------*/
 
@@ -152,6 +173,7 @@ static enum ZclStatusCodeT onOff_server_1_off(struct ZbZclClusterT *cluster, str
   /* USER CODE BEGIN 0 OnOff server 1 off 1 */
 	uint8_t endpoint;
 	  struct RGB_object_t RGB_zero = {0};
+	  //ZbZclAttrIntegerWrite(zigbee_app_info.water_content_client_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, test1--);
 
 
 	  endpoint = ZbZclClusterGetEndpoint(cluster);
@@ -177,6 +199,8 @@ static enum ZclStatusCodeT onOff_server_1_on(struct ZbZclClusterT *cluster, stru
 	uint8_t endpoint;
 
 	  endpoint = ZbZclClusterGetEndpoint(cluster);
+	  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, test++);
+
 	  if (endpoint == SW1_ENDPOINT)
 	  {
 	    APP_DBG("LED_RED ON");
@@ -320,6 +344,8 @@ static void APP_ZIGBEE_StackLayersInit(void)
   APP_ZIGBEE_ConfigEndpoints();
 
   /* USER CODE BEGIN APP_ZIGBEE_StackLayersInit */
+  APP_ZIGBEE_ConfigBasicServer();
+
   /* USER CODE END APP_ZIGBEE_StackLayersInit */
 
   /* Configure the joining parameters */
@@ -380,8 +406,25 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   zigbee_app_info.levelControl_server_1 = ZbZclLevelServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, zigbee_app_info.onOff_server_1, &LevelServerCallbacks_1, NULL);
   assert(zigbee_app_info.levelControl_server_1 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.levelControl_server_1);
+  /* Endpoint: SW2_ENDPOINT */
+  req.profileId = ZCL_PROFILE_HOME_AUTOMATION;
+  req.deviceId = ZCL_DEVICE_SIMPLE_SENSOR;
+  req.endpoint = SW2_ENDPOINT;
+  ZbZclAddEndpoint(zigbee_app_info.zb, &req, &conf);
+  assert(conf.status == ZB_STATUS_SUCCESS);
+
+  /* Basic client/server */
+  zigbee_app_info.basic_client_2 = ZbZclBasicClientAlloc(zigbee_app_info.zb, SW2_ENDPOINT);
+  assert(zigbee_app_info.basic_client_2 != NULL);
+  ZbZclClusterEndpointRegister(zigbee_app_info.basic_client_2);
+  /* Water content server */
+  zigbee_app_info.water_content_server_2 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW2_ENDPOINT, ZCL_CLUSTER_MEAS_HUMIDITY, HUMIDITY_MIN_2, HUMIDITY_MAX_2);
+  assert(zigbee_app_info.water_content_server_2 != NULL);
+  ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_2);
 
   /* USER CODE BEGIN CONFIG_ENDPOINT */
+  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, test++);
+
   /* USER CODE END CONFIG_ENDPOINT */
 }
 
@@ -601,6 +644,8 @@ static void APP_ZIGBEE_CheckWirelessFirmwareInfo(void)
     APP_DBG("onOff Server on Endpoint %d", SW1_ENDPOINT);
     APP_DBG("colorControl Server on Endpoint %d", SW1_ENDPOINT);
     APP_DBG("levelControl Server on Endpoint %d", SW1_ENDPOINT);
+    APP_DBG("basic Client on Endpoint %d", SW2_ENDPOINT);
+    APP_DBG("water_content Server on Endpoint %d", SW2_ENDPOINT);
     APP_DBG("**********************************************************");
   }
 }
@@ -791,5 +836,40 @@ static void APP_ZIGBEE_ProcessRequestM0ToM4(void)
 }
 
 /* USER CODE BEGIN FD_LOCAL_FUNCTIONS */
+/**
+ * @brief  Configure Zigbee Basic Server Cluster
+ * @param  None
+ * @retval None
+ */
+void APP_ZIGBEE_ConfigBasicServer(void)
+{
+  static struct ZbZclBasicServerDefaults   stBasicServerDefaults;
+
+  /* Initialize Basic Server Cluster 'defaults' information */
+  memset( &stBasicServerDefaults, 0x00, sizeof(stBasicServerDefaults) );
+
+  stBasicServerDefaults.mfr_name[0] = sizeof( APP_ZIGBEE_MFR_NAME );
+  memcpy( &stBasicServerDefaults.mfr_name[1], APP_ZIGBEE_MFR_NAME, sizeof( APP_ZIGBEE_MFR_NAME ) );
+
+  stBasicServerDefaults.model_name[0] = sizeof( APP_ZIGBEE_CHIP_NAME );
+  memcpy( &stBasicServerDefaults.model_name[1], APP_ZIGBEE_CHIP_NAME, sizeof( APP_ZIGBEE_CHIP_NAME ) );
+
+  stBasicServerDefaults.date_code[0] = sizeof( APP_ZIGBEE_APP_DATE_CODE );
+  memcpy( &stBasicServerDefaults.date_code[1], APP_ZIGBEE_APP_DATE_CODE, sizeof( APP_ZIGBEE_APP_DATE_CODE ) );
+
+  stBasicServerDefaults.sw_build_id[0] = sizeof( APP_ZIGBEE_APP_BUILD_ID );
+  memcpy( &stBasicServerDefaults.sw_build_id[1], APP_ZIGBEE_APP_BUILD_ID, sizeof( APP_ZIGBEE_APP_BUILD_ID ) );
+
+  /* Version are on 8 bits : 3 bits for Major version and 5 bits for Minor version */
+  stBasicServerDefaults.app_version = (uint8_t)( ( APP_ZIGBEE_APP_VERSION & 0x70u ) << 1u ) | ( APP_ZIGBEE_APP_VERSION & 0x0Fu );
+  stBasicServerDefaults.stack_version = (uint8_t)( ( APP_ZIGBEE_STACK_VERSION & 0x70u ) << 1u ) | ( APP_ZIGBEE_STACK_VERSION & 0x0Fu );
+  stBasicServerDefaults.hw_version = (uint8_t)( ( APP_ZIGBEE_CHIP_VERSION & 0x70u ) << 1u ) | ( APP_ZIGBEE_CHIP_VERSION & 0x0Fu );
+
+  stBasicServerDefaults.power_source = APP_ZIGBEE_BOARD_POWER;
+
+  /* Configure default Basic Server */
+  ZbZclBasicServerConfigDefaults( zigbee_app_info.zb , &stBasicServerDefaults );
+}
+
 
 /* USER CODE END FD_LOCAL_FUNCTIONS */

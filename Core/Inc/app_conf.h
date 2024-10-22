@@ -274,10 +274,11 @@ typedef enum
 /******************************************************************************
  * Configure Log level for Application
  ******************************************************************************/
-#define APPLI_CONFIG_LOG_LEVEL    LOG_LEVEL_INFO
-#define APPLI_PRINT_FILE_FUNC_LINE    0
+#define APPLI_CONFIG_LOG_LEVEL    LOG_LEVEL_DEBG
+#define APPLI_PRINT_FILE_FUNC_LINE    1
 
 /* USER CODE BEGIN Defines */
+#define APPLI_PRINT_FILE_FUNC_LINE    1
 
 /* USER CODE END Defines */
 
