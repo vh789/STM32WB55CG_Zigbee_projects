@@ -64,24 +64,24 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define led_g_Pin GPIO_PIN_0
 #define led_g_GPIO_Port GPIOA
+#define BTN2_Pin GPIO_PIN_1
+#define BTN2_GPIO_Port GPIOA
 #define led_r_Pin GPIO_PIN_2
 #define led_r_GPIO_Port GPIOA
 #define led_b_Pin GPIO_PIN_3
 #define led_b_GPIO_Port GPIOA
-#define button_4_Pin GPIO_PIN_0
-#define button_4_GPIO_Port GPIOB
-#define relais_1_Pin GPIO_PIN_1
-#define relais_1_GPIO_Port GPIOB
-#define rlais_2_Pin GPIO_PIN_15
-#define rlais_2_GPIO_Port GPIOA
-#define relais_3_Pin GPIO_PIN_3
-#define relais_3_GPIO_Port GPIOB
-#define button_3_Pin GPIO_PIN_4
-#define button_3_GPIO_Port GPIOB
-#define button_2_Pin GPIO_PIN_5
-#define button_2_GPIO_Port GPIOB
-#define button_1_Pin GPIO_PIN_6
-#define button_1_GPIO_Port GPIOB
+#define sens1_Pin GPIO_PIN_4
+#define sens1_GPIO_Port GPIOA
+#define sens2_Pin GPIO_PIN_5
+#define sens2_GPIO_Port GPIOA
+#define sens3_Pin GPIO_PIN_6
+#define sens3_GPIO_Port GPIOA
+#define TEMP_HUMID_Pin GPIO_PIN_7
+#define TEMP_HUMID_GPIO_Port GPIOA
+#define BOARD_LED_Pin GPIO_PIN_4
+#define BOARD_LED_GPIO_Port GPIOE
+#define BTN1_Pin GPIO_PIN_7
+#define BTN1_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

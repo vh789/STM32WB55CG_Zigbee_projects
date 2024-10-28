@@ -418,7 +418,7 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   assert(zigbee_app_info.basic_client_2 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.basic_client_2);
   /* Water content server */
-  zigbee_app_info.water_content_server_2 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW2_ENDPOINT, ZCL_CLUSTER_MEAS_HUMIDITY, HUMIDITY_MIN_2, HUMIDITY_MAX_2);
+  zigbee_app_info.water_content_server_2 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, ZCL_CLUSTER_MEAS_HUMIDITY, HUMIDITY_MIN_2, HUMIDITY_MAX_2);
   assert(zigbee_app_info.water_content_server_2 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_2);
 
