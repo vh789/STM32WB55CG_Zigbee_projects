@@ -14,8 +14,10 @@ RM := rm -rf
 -include STM32_WPAN/App/subdir.mk
 -include Middlewares/STM32_WPAN/subdir.mk
 -include Drivers/STM32WBxx_HAL_Driver/subdir.mk
+-include Core/User_Code/TEMP_MOIST/subdir.mk
 -include Core/User_Code/RGB/subdir.mk
 -include Core/User_Code/Moisture_Sensor/subdir.mk
+-include Core/User_Code/ISR/subdir.mk
 -include Core/User_Code/DHT11/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk

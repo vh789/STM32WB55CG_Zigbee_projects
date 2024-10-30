@@ -25,8 +25,10 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Core/User_Code/DHT11 \
+Core/User_Code/ISR \
 Core/User_Code/Moisture_Sensor \
 Core/User_Code/RGB \
+Core/User_Code/TEMP_MOIST \
 Drivers/STM32WBxx_HAL_Driver \
 Middlewares/STM32_WPAN \
 STM32_WPAN/App \

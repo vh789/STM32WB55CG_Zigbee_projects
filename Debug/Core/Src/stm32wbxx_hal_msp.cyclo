@@ -18,9 +18,9 @@ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HA
 ../Core/Src/stm32wbxx_hal_msp.c:328:6:HAL_RTC_MspInit	3
 ../Core/Src/stm32wbxx_hal_msp.c:367:6:HAL_RTC_MspDeInit	2
 ../Core/Src/stm32wbxx_hal_msp.c:390:6:HAL_TIM_Base_MspInit	3
-../Core/Src/stm32wbxx_hal_msp.c:423:6:HAL_TIM_PWM_MspInit	2
-../Core/Src/stm32wbxx_hal_msp.c:440:6:HAL_TIM_MspPostInit	2
-../Core/Src/stm32wbxx_hal_msp.c:474:6:HAL_TIM_Base_MspDeInit	3
-../Core/Src/stm32wbxx_hal_msp.c:507:6:HAL_TIM_PWM_MspDeInit	2
-../Core/Src/stm32wbxx_hal_msp.c:529:6:HAL_UART_MspInit	3
-../Core/Src/stm32wbxx_hal_msp.c:580:6:HAL_UART_MspDeInit	2
+../Core/Src/stm32wbxx_hal_msp.c:429:6:HAL_TIM_PWM_MspInit	2
+../Core/Src/stm32wbxx_hal_msp.c:446:6:HAL_TIM_MspPostInit	2
+../Core/Src/stm32wbxx_hal_msp.c:480:6:HAL_TIM_Base_MspDeInit	3
+../Core/Src/stm32wbxx_hal_msp.c:533:6:HAL_TIM_PWM_MspDeInit	2
+../Core/Src/stm32wbxx_hal_msp.c:555:6:HAL_UART_MspInit	3
+../Core/Src/stm32wbxx_hal_msp.c:606:6:HAL_UART_MspDeInit	2

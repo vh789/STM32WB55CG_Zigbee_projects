@@ -155,6 +155,12 @@ int main(void)
 
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_buffer, 3);
 
+  if (HAL_TIM_Base_Start_IT(&htim1) != HAL_OK)
+    {
+      /* Starting Error */
+      Error_Handler();
+    }
+
   /* USER CODE END 2 */
 
   /* Init code for STM32_WPAN */
@@ -180,7 +186,6 @@ int main(void)
 //	  printf("ADC: %d\n", value_adc);
 
   	// toggle LED
-  HAL_GPIO_TogglePin(BOARD_LED_GPIO_Port, BOARD_LED_Pin);
     // printf
   printf("ADC1: %d, ADC2: %d, ADC3: %d\n", adc_buffer[0], adc_buffer[1], adc_buffer[2]);
 
@@ -503,9 +508,9 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0xFFFF;
+  htim1.Init.Prescaler = 32000-1;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 0xFF;
+  htim1.Init.Period = 1000-1;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -518,9 +523,9 @@ static void MX_TIM1_Init(void)
   {
     Error_Handler();
   }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterOutputTrigger2 = TIM_TRGO2_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_ENABLE;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
