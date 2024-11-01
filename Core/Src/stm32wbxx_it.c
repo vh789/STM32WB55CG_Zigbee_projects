@@ -227,8 +227,7 @@ void TIM1_UP_TIM16_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim1);
   HAL_TIM_IRQHandler(&htim16);
   /* USER CODE BEGIN TIM1_UP_TIM16_IRQn 1 */
-  HAL_GPIO_TogglePin(BOARD_LED_GPIO_Port, BOARD_LED_Pin);
-
+  cyclic_routine();
 
   /* USER CODE END TIM1_UP_TIM16_IRQn 1 */
 }

@@ -26,9 +26,9 @@ Core/Src \
 Core/Startup \
 Core/User_Code/DHT11 \
 Core/User_Code/ISR \
-Core/User_Code/Moisture_Sensor \
 Core/User_Code/RGB \
-Core/User_Code/TEMP_MOIST \
+Core/User_Code/SOIL_MOIST \
+Core/User_Code/TEMP_HUMID \
 Drivers/STM32WBxx_HAL_Driver \
 Middlewares/STM32_WPAN \
 STM32_WPAN/App \

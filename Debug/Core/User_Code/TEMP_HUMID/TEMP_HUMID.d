@@ -1,7 +1,7 @@
-Core/User_Code/TEMP_MOIST/TEMP_MOIST.o: \
- ../Core/User_Code/TEMP_MOIST/TEMP_MOIST.c \
- ../Core/User_Code/TEMP_MOIST/TEMP_MOIST.h \
- ../Core/User_Code/TEMP_MOIST/../DHT11/mk_dht11.h ../Core/Inc/main.h \
+Core/User_Code/TEMP_HUMID/TEMP_HUMID.o: \
+ ../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c \
+ ../Core/User_Code/TEMP_HUMID/TEMP_HUMID.h \
+ ../Core/User_Code/TEMP_HUMID/../DHT11/mk_dht11.h ../Core/Inc/main.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h \
  ../Core/Inc/stm32wbxx_hal_conf.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_dma.h \
@@ -62,8 +62,8 @@ Core/User_Code/TEMP_MOIST/TEMP_MOIST.o: \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_gpio.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_rtc.h \
  ../Core/Inc/app_entry.h ../Core/Inc/app_common.h
-../Core/User_Code/TEMP_MOIST/TEMP_MOIST.h:
-../Core/User_Code/TEMP_MOIST/../DHT11/mk_dht11.h:
+../Core/User_Code/TEMP_HUMID/TEMP_HUMID.h:
+../Core/User_Code/TEMP_HUMID/../DHT11/mk_dht11.h:
 ../Core/Inc/main.h:
 C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h:
 ../Core/Inc/stm32wbxx_hal_conf.h:

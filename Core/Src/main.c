@@ -22,8 +22,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "../User_Code/RGB/RGB.h"
-#include "../User_Code/DHT11/mk_dht11.h"
+//#include "../User_Code/RGB/RGB.h"
+#include "../User_Code/TEMP_HUMID/TEMP_HUMID.h"
+#include "../User_Code/SOIL_MOIST/SOIL_MOIST.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,7 +60,10 @@ TIM_HandleTypeDef htim16;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-uint16_t adc_buffer[3];
+uint16_t adc_buffer[3];									// hold ADC DMA values
+
+struct TEMP_HUMID_obj OBJ_TEMP_HUMID = {0};				// Object for temp/humidity sensor
+struct SOIL_MOIST_obj OBJ_SOIL_MOIST_sensor_1 = {0};	// Object for soil moisture sensor 1
 
 /* USER CODE END PV */
 
@@ -93,10 +98,6 @@ int __io_putchar(int ch)
 }
 // check if necessary
 
-// stuct for temp/humid sensor
-dht11_t dht11 = { 0 };
-
-uint32_t value_adc = 0;
 /* USER CODE END 0 */
 
 /**
@@ -151,8 +152,9 @@ int main(void)
   printf("\n\n\nNew start\n");
 
   // init DHT11
-  init_dht11(&dht11, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
-
+  //init_dht11(&dht11, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
+  TEMP_HUMID_init(&OBJ_TEMP_HUMID, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
+  SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_1, &adc_buffer[0]);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_buffer, 3);
 
   if (HAL_TIM_Base_Start_IT(&htim1) != HAL_OK)
@@ -177,17 +179,11 @@ int main(void)
 
 	HAL_Delay(500);
 	// read temp sens
-	readDHT11(&dht11);
-//	printf("Temperature: %d, Humidity: %d\n", dht11.temperature, dht11.humidty);
-	// read adc
-//  HAL_ADC_Start(&hadc1);
-//  HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
-//  value_adc = HAL_ADC_GetValue(&hadc1);
-//	  printf("ADC: %d\n", value_adc);
+
 
   	// toggle LED
     // printf
-  printf("ADC1: %d, ADC2: %d, ADC3: %d\n", adc_buffer[0], adc_buffer[1], adc_buffer[2]);
+//  printf("ADC1: %d, ADC2: %d, ADC3: %d\n", adc_buffer[0], adc_buffer[1], adc_buffer[2]);
 
 
   }
