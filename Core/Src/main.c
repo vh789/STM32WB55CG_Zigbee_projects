@@ -25,6 +25,8 @@
 //#include "../User_Code/RGB/RGB.h"
 #include "../User_Code/TEMP_HUMID/TEMP_HUMID.h"
 #include "../User_Code/SOIL_MOIST/SOIL_MOIST.h"
+#include "../User_Code/RGB/RGB.h"
+
 
 /* USER CODE END Includes */
 
@@ -62,6 +64,7 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 uint16_t adc_buffer[3];									// hold ADC DMA values
 
+struct RGB_obj OBJ_RGB_LED = {0};						// Object for RGB LED Strip
 struct TEMP_HUMID_obj OBJ_TEMP_HUMID = {0};				// Object for temp/humidity sensor
 struct SOIL_MOIST_obj OBJ_SOIL_MOIST_sensor_1 = {0};	// Object for soil moisture sensor 1
 
@@ -155,6 +158,7 @@ int main(void)
   //init_dht11(&dht11, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
   TEMP_HUMID_init(&OBJ_TEMP_HUMID, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
   SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_1, &adc_buffer[0]);
+  RGB_init(&OBJ_RGB_LED, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_4);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_buffer, 3);
 
   if (HAL_TIM_Base_Start_IT(&htim1) != HAL_OK)
@@ -178,11 +182,6 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	HAL_Delay(500);
-	// read temp sens
-
-
-  	// toggle LED
-    // printf
 //  printf("ADC1: %d, ADC2: %d, ADC3: %d\n", adc_buffer[0], adc_buffer[1], adc_buffer[2]);
 
 

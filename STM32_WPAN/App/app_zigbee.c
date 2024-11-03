@@ -160,9 +160,11 @@ static struct ZbZclLevelServerCallbacksT LevelServerCallbacks_1 =
 };
 
 /* USER CODE BEGIN PV */
-struct RGB_object_t RGB = {0};
+struct XY_colors colors = {0};
 int test = 0;
 int test1 = 10;
+
+extern struct RGB_obj OBJ_RGB_LED;		// REGB object
 
 /* USER CODE END PV */
 /* Functions Definition ------------------------------------------------------*/
@@ -172,7 +174,6 @@ static enum ZclStatusCodeT onOff_server_1_off(struct ZbZclClusterT *cluster, str
 {
   /* USER CODE BEGIN 0 OnOff server 1 off 1 */
 	uint8_t endpoint;
-	  struct RGB_object_t RGB_zero = {0};
 	  //ZbZclAttrIntegerWrite(zigbee_app_info.water_content_client_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, test1--);
 
 
@@ -180,7 +181,7 @@ static enum ZclStatusCodeT onOff_server_1_off(struct ZbZclClusterT *cluster, str
 	  if (endpoint == SW1_ENDPOINT)
 	  {
 	    APP_DBG("LED_RED OFF");
-	    update_RGB(RGB_zero);
+	    RGB_turn_off(&OBJ_RGB_LED);
 		(void)ZbZclAttrIntegerWrite(cluster, ZCL_ONOFF_ATTR_ONOFF, 0);
 	  }
 	  else
@@ -204,7 +205,7 @@ static enum ZclStatusCodeT onOff_server_1_on(struct ZbZclClusterT *cluster, stru
 	  if (endpoint == SW1_ENDPOINT)
 	  {
 	    APP_DBG("LED_RED ON");
-	    update_RGB(RGB);
+	    RGB_turn_on(&OBJ_RGB_LED);
 	    (void)ZbZclAttrIntegerWrite(cluster, ZCL_ONOFF_ATTR_ONOFF, 1);
 	  }
 	  else
@@ -248,9 +249,7 @@ static enum ZclStatusCodeT colorControl_server_1_move_to_color_xy(struct ZbZclCl
 	      endpoint = ZbZclClusterGetEndpoint(cluster);
 	      if (endpoint == SW1_ENDPOINT)
 	      {
-	    	  RGB.color_x = req->color_x;
-	    	  RGB.color_y = req->color_y;
-	    	  update_RGB(RGB);
+	    	RGB_set_xy(&OBJ_RGB_LED, req->color_x, req->color_y);
 	        (void)ZbZclAttrIntegerWrite(cluster, ZCL_COLOR_ATTR_CURRENT_X, req->color_x);
 	        (void)ZbZclAttrIntegerWrite(cluster, ZCL_COLOR_ATTR_CURRENT_Y, req->color_y);
 
@@ -273,8 +272,7 @@ static enum ZclStatusCodeT levelControl_server_1_move_to_level(struct ZbZclClust
 	  endpoint = ZbZclClusterGetEndpoint(cluster);
 	  if (endpoint == SW1_ENDPOINT)
 	  {
-		  RGB.brightness = req->level;
-	  	  update_RGB(RGB);
+		RGB_set_brightness(&OBJ_RGB_LED, req->level);
 		(void)ZbZclAttrIntegerWrite(cluster, ZCL_LEVEL_ATTR_CURRLEVEL, req->level);
 
 	  }

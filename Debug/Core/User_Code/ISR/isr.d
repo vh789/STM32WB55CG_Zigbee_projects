@@ -1,5 +1,5 @@
 Core/User_Code/ISR/isr.o: ../Core/User_Code/ISR/isr.c \
- ../Core/User_Code/ISR/isr.h \
+ ../Core/User_Code/ISR/isr.h ../Core/User_Code/ISR/../SHARED_HEADER.h \
  ../Core/User_Code/ISR/../TEMP_HUMID/TEMP_HUMID.h \
  ../Core/User_Code/ISR/../TEMP_HUMID/../DHT11/mk_dht11.h \
  ../Core/Inc/main.h \
@@ -65,6 +65,7 @@ Core/User_Code/ISR/isr.o: ../Core/User_Code/ISR/isr.c \
  ../Core/Inc/app_entry.h ../Core/Inc/app_common.h \
  ../Core/User_Code/ISR/../SOIL_MOIST/SOIL_MOIST.h
 ../Core/User_Code/ISR/isr.h:
+../Core/User_Code/ISR/../SHARED_HEADER.h:
 ../Core/User_Code/ISR/../TEMP_HUMID/TEMP_HUMID.h:
 ../Core/User_Code/ISR/../TEMP_HUMID/../DHT11/mk_dht11.h:
 ../Core/Inc/main.h:

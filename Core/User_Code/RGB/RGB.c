@@ -1,27 +1,53 @@
 #include "RGB.h"
 #include <math.h>
+#include "../SHARED_HEADER.h"
 
 extern TIM_HandleTypeDef htim2;
 
 void setPWM_normal_timer(TIM_HandleTypeDef timer, uint32_t channel, uint16_t pulse);
 uint16_t saturate_color(uint16_t in);
-struct RGB_t xy_to_RGB(float x, float y, float brightness);
+struct RGB_colors xy_to_RGB(float x, float y, float brightness);
+void update_color_xy(struct RGB_obj *obj);
 
-
-void update_RGB(struct RGB_object_t data){
-	float x = 1.0f*data.color_x/0xFFFF;
-	float y = 1.0f*data.color_y/0xFFFF;
-	float brightness = 1.0f*data.brightness/0xFF;
-	set_color_xy(x, y, brightness);
+void RGB_init(struct RGB_obj *obj, TIM_HandleTypeDef *timer, uint32_t channel_red, uint32_t channel_green, uint32_t channel_blue){
+	struct RGB_colors zero_col = {0};
+	obj->timer = timer;
+	obj->channel_red = channel_red;
+	obj->channel_green = channel_green;
+	obj->channel_blue = channel_blue;
+	obj->XY_col.x = 0;
+	obj->XY_col.y = 0,
+	obj->XY_col.brightness = 0xFF,
+	obj->on_status = false;
+	RGB_set(obj, zero_col);
 }
 
+void RGB_set_xy(struct RGB_obj *obj, uint16_t x, uint16_t y){
+	obj->XY_col.x = x;
+	obj->XY_col.y = y;
+	update_color_xy(obj);
+}
 
+void RGB_set_brightness(struct RGB_obj *obj, uint16_t brightness){
+	obj->XY_col.brightness = brightness;
+	update_color_xy(obj);
+}
 
+void RGB_set(struct RGB_obj *obj, struct RGB_colors color){
+	setPWM_normal_timer(*obj->timer, obj->channel_blue, color.b);
+	setPWM_normal_timer(*obj->timer, obj->channel_green, color.g);
+	setPWM_normal_timer(*obj->timer, obj->channel_red, color.r);
+}
 
-void set_RGB(uint16_t red, uint16_t green, uint16_t blue){
-	setPWM_normal_timer(htim2, TIM_CHANNEL_4, blue);					// normal timer
-	setPWM_normal_timer(htim2, TIM_CHANNEL_3, green);		// negative timer
-	setPWM_normal_timer(htim2, TIM_CHANNEL_1, red);					// normal timer
+void RGB_turn_off(struct RGB_obj *obj){
+	struct RGB_colors zero_col = {0};
+	obj->on_status = false;
+	RGB_set(obj, zero_col);
+}
+
+void RGB_turn_on(struct RGB_obj *obj){
+	obj->on_status = true;
+	update_color_xy(obj);
 }
 
 void setPWM_normal_timer(TIM_HandleTypeDef timer, uint32_t channel, uint16_t pulse) {
@@ -47,7 +73,7 @@ uint16_t saturate_color(uint16_t in){
 }
 
 //https://gist.github.com/popcorn245/30afa0f98eea1c2fd34d
-struct RGB_t xy_to_RGB(float x, float y, float brightness){
+struct RGB_colors xy_to_RGB(float x, float y, float brightness){
 	float z = 1.0f - x - y;
 	float Y = brightness; // The given brightness value
 	float X = (Y / y) * x;
@@ -74,17 +100,21 @@ struct RGB_t xy_to_RGB(float x, float y, float brightness){
 	b = b/max;
 	}
 
-	struct RGB_t out = {
-		.red = MAX_BRIGHTNESS*r,
-		.green = MAX_BRIGHTNESS*g,
-		.blue = MAX_BRIGHTNESS*b
+	struct RGB_colors out = {
+		.r = MAX_BRIGHTNESS*r,
+		.g = MAX_BRIGHTNESS*g,
+		.b = MAX_BRIGHTNESS*b
 	};
 	return out;
 }
 
-void set_color_xy(float x, float y, float brightness){
-	struct RGB_t RGB = xy_to_RGB(x, y, brightness);
-    printf("R: %d, G: %d, B: %d", RGB.red, RGB.green, RGB.blue);
-
-	set_RGB(RGB.red, RGB.green, RGB.blue);
+void update_color_xy(struct RGB_obj *obj){
+	float x = 1.0f*obj->XY_col.x/0xFFFF;
+	float y = 1.0f*obj->XY_col.x/0xFFFF;
+	float brightness = 1.0f*obj->XY_col.brightness/0xFF;
+	struct RGB_colors RGB = xy_to_RGB(x, y, brightness);
+#ifdef DEGBUG_PRINTF
+    printf("R: %d, G: %d, B: %d", RGB.r, RGB.g, RGB.b);
+#endif
+	RGB_set(obj, RGB);
 }

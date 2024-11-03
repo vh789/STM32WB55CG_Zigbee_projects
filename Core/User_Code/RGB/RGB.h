@@ -1,21 +1,35 @@
 #pragma once
 
 #include "stm32wbxx_hal.h"
+#include <stdint.h>
+#include <stdbool.h>
+
 #define MAX_BRIGHTNESS 100
 
-struct RGB_t{
-	uint16_t red;
-	uint16_t green;
-	uint16_t blue;
-};
-
-struct RGB_object_t{
-	uint16_t color_x;
-	uint16_t color_y;
+struct XY_colors{
+	uint16_t x;
+	uint16_t y;
 	uint16_t brightness;
 };
 
-void update_RGB(struct RGB_object_t data);
+struct RGB_colors{
+	uint16_t r;
+	uint16_t g;
+	uint16_t b;
+};
 
-void set_RGB(uint16_t red, uint16_t green, uint16_t blue);
-void set_color_xy(float x, float y, float brightness);
+struct RGB_obj{
+	TIM_HandleTypeDef *timer;
+	uint32_t channel_red;
+	uint32_t channel_green;
+	uint32_t channel_blue;
+	struct XY_colors XY_col;
+	bool on_status;
+};
+
+void RGB_init(struct RGB_obj *obj, TIM_HandleTypeDef *timer, uint32_t channel_red, uint32_t channel_green, uint32_t channel_blue);
+void RGB_set(struct RGB_obj *obj, struct RGB_colors color);
+void RGB_set_xy(struct RGB_obj *obj, uint16_t x, uint16_t y);
+void RGB_set_brightness(struct RGB_obj *obj, uint16_t brightness);
+void RGB_turn_off(struct RGB_obj *obj);
+void RGB_turn_on(struct RGB_obj *obj);

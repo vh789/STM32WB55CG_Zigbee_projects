@@ -11,11 +11,10 @@ extern struct SOIL_MOIST_obj OBJ_SOIL_MOIST_sensor_1;	// Object for soil moistur
 void cyclic_routine(void){
 	TEMP_HUMID_read(&OBJ_TEMP_HUMID);
 
-
+#ifdef DEGBUG_PRINTF
 	printf("Temperature: %d, Humidity: %d\n", OBJ_TEMP_HUMID.dht11.temperature, OBJ_TEMP_HUMID.dht11.humidty);
-
 	printf("Soil Moisture: %d promille\n", SOIL_MOIST_get_moisture_percent(&OBJ_SOIL_MOIST_sensor_1));
-
+#endif
 
 	HAL_GPIO_TogglePin(BOARD_LED_GPIO_Port, BOARD_LED_Pin);
 

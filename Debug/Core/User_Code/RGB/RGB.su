@@ -1,6 +1,10 @@
-../Core/User_Code/RGB/RGB.c:11:6:update_RGB	32	static
-../Core/User_Code/RGB/RGB.c:21:6:set_RGB	104	static
-../Core/User_Code/RGB/RGB.c:27:6:setPWM_normal_timer	40	static
-../Core/User_Code/RGB/RGB.c:41:10:saturate_color	16	static
-../Core/User_Code/RGB/RGB.c:50:14:xy_to_RGB	72	static
-../Core/User_Code/RGB/RGB.c:85:6:set_color_xy	32	static
+../Core/User_Code/RGB/RGB.c:12:6:RGB_init	32	static
+../Core/User_Code/RGB/RGB.c:25:6:RGB_set_xy	16	static
+../Core/User_Code/RGB/RGB.c:31:6:RGB_set_brightness	16	static
+../Core/User_Code/RGB/RGB.c:36:6:RGB_set	112	static
+../Core/User_Code/RGB/RGB.c:42:6:RGB_turn_off	24	static
+../Core/User_Code/RGB/RGB.c:48:6:RGB_turn_on	16	static
+../Core/User_Code/RGB/RGB.c:53:6:setPWM_normal_timer	40	static
+../Core/User_Code/RGB/RGB.c:67:10:saturate_color	16	static
+../Core/User_Code/RGB/RGB.c:76:19:xy_to_RGB	72	static
+../Core/User_Code/RGB/RGB.c:111:6:update_color_xy	40	static
