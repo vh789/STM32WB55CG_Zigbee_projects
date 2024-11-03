@@ -10,18 +10,24 @@ void TEMP_HUMID_read(struct TEMP_HUMID_obj *obj){
 	case DHT11:
 		readDHT11(&obj->dht11);
 		obj->temperature_degC = (float)obj->dht11.temperature;
-		obj->humidty_percent = (float)obj->dht11.humidty;
+		obj->humidity_percent = (float)obj->dht11.humidty;
 		break;
 	case DHT22:
 
 		break;
 	default:
 		obj->temperature_degC = 0;
-		obj->humidty_percent = 0;
+		obj->humidity_percent = 0;
 		break;
 	}
 }
 
-float TEMP_HUMID_get_temperature(struct TEMP_HUMID_obj *obj);
+long long TEMP_HUMID_get_temperature(struct TEMP_HUMID_obj *obj){
+	float value_mul = obj->temperature_degC * 10.0f;
+	return ((long long)(value_mul));
+}
 
-float TEMP_HUMID_get_moisture(struct TEMP_HUMID_obj *obj);
+long long TEMP_HUMID_get_humidity(struct TEMP_HUMID_obj *obj){
+	float value_mul = obj->humidity_percent * 10.0f;
+	return ((long long)(value_mul));
+}

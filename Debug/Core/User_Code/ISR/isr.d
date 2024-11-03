@@ -63,7 +63,17 @@ Core/User_Code/ISR/isr.o: ../Core/User_Code/ISR/isr.c \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_gpio.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_rtc.h \
  ../Core/Inc/app_entry.h ../Core/Inc/app_common.h \
- ../Core/User_Code/ISR/../SOIL_MOIST/SOIL_MOIST.h
+ ../Core/User_Code/ISR/../SOIL_MOIST/SOIL_MOIST.h \
+ ../STM32_WPAN/App/app_zigbee.h \
+ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h \
+ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/stm32_wpan_common.h \
+ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/CMSIS/Include/cmsis_compiler.h \
+ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_zigbee_hci.h \
+ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/zigbee/core/inc/zigbee_core.h \
+ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_def.h \
+ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/zigbee/core/inc/stm32wbxx_core_interface_def.h \
+ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/zigbee/core/inc/zigbee_types.h \
+ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h
 ../Core/User_Code/ISR/isr.h:
 ../Core/User_Code/ISR/../SHARED_HEADER.h:
 ../Core/User_Code/ISR/../TEMP_HUMID/TEMP_HUMID.h:
@@ -132,3 +142,13 @@ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HA
 ../Core/Inc/app_entry.h:
 ../Core/Inc/app_common.h:
 ../Core/User_Code/ISR/../SOIL_MOIST/SOIL_MOIST.h:
+../STM32_WPAN/App/app_zigbee.h:
+C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h:
+C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/stm32_wpan_common.h:
+C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/CMSIS/Include/cmsis_compiler.h:
+C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_zigbee_hci.h:
+C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/zigbee/core/inc/zigbee_core.h:
+C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_def.h:
+C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/zigbee/core/inc/stm32wbxx_core_interface_def.h:
+C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/zigbee/core/inc/zigbee_types.h:
+C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h:

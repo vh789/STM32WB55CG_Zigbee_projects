@@ -39,6 +39,7 @@
 #include "zcl/general/zcl.onoff.h"
 #include "zcl/general/zcl.color.h"
 #include "zcl/general/zcl.level.h"
+#include "zcl/general/zcl.temp.meas.h"
 #include "zcl/general/zcl.wcm.h"
 
 /* USER CODE BEGIN Includes */
@@ -55,10 +56,20 @@
 
 #define SW1_ENDPOINT                                20
 #define SW2_ENDPOINT                                21
+#define SW3_ENDPOINT                                22
+#define SW4_ENDPOINT                                23
 
 /* USER CODE BEGIN PD */
 #define HUMIDITY_MIN_2 0
 #define HUMIDITY_MAX_2 100
+#define TEMP_MIN_2 -20
+#define TEMP_MAX_2 100
+#define TEMP_TOLERANCE_2 1
+#define HUMIDITY_MIN_3 0
+#define HUMIDITY_MAX_3 100
+#define HUMIDITY_MIN_4 0
+#define HUMIDITY_MAX_4 100
+
 /* USER CODE END PD */
 
 /* Private macros ------------------------------------------------------------*/
@@ -127,7 +138,10 @@ struct zigbee_app_info
   struct ZbZclClusterT *colorControl_server_1;
   struct ZbZclClusterT *levelControl_server_1;
   struct ZbZclClusterT *basic_client_2;
+  struct ZbZclClusterT *temperature_meas_server_2;
   struct ZbZclClusterT *water_content_server_2;
+  struct ZbZclClusterT *water_content_server_3;
+  struct ZbZclClusterT *water_content_server_4;
 };
 static struct zigbee_app_info zigbee_app_info;
 
@@ -200,8 +214,6 @@ static enum ZclStatusCodeT onOff_server_1_on(struct ZbZclClusterT *cluster, stru
 	uint8_t endpoint;
 
 	  endpoint = ZbZclClusterGetEndpoint(cluster);
-	  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, test++);
-
 	  if (endpoint == SW1_ENDPOINT)
 	  {
 	    APP_DBG("LED_RED ON");
@@ -393,6 +405,8 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
      *          .enhanced_supported     //bool
      */
     /* USER CODE BEGIN Color Server Config (endpoint1) */
+	.capabilities = ZCL_COLOR_CAP_XY,
+
     /* USER CODE END Color Server Config (endpoint1) */
   };
   zigbee_app_info.colorControl_server_1 = ZbZclColorServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, zigbee_app_info.onOff_server_1, NULL, 0, &colorServerConfig_1, NULL);
@@ -413,10 +427,36 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   zigbee_app_info.basic_client_2 = ZbZclBasicClientAlloc(zigbee_app_info.zb, SW2_ENDPOINT);
   assert(zigbee_app_info.basic_client_2 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.basic_client_2);
+  /* Temperature meas server */
+  zigbee_app_info.temperature_meas_server_2 = ZbZclTempMeasServerAlloc(zigbee_app_info.zb, SW2_ENDPOINT, TEMP_MIN_2, TEMP_MAX_2, TEMP_TOLERANCE_2);
+  assert(zigbee_app_info.temperature_meas_server_2 != NULL);
+  ZbZclClusterEndpointRegister(zigbee_app_info.temperature_meas_server_2);
   /* Water content server */
-  zigbee_app_info.water_content_server_2 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, ZCL_CLUSTER_MEAS_HUMIDITY, HUMIDITY_MIN_2, HUMIDITY_MAX_2);
+  zigbee_app_info.water_content_server_2 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW2_ENDPOINT, ZCL_CLUSTER_MEAS_HUMIDITY, HUMIDITY_MIN_2, HUMIDITY_MAX_2);
   assert(zigbee_app_info.water_content_server_2 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_2);
+  /* Endpoint: SW3_ENDPOINT */
+  req.profileId = ZCL_PROFILE_HOME_AUTOMATION;
+  req.deviceId = ZCL_DEVICE_SIMPLE_SENSOR;
+  req.endpoint = SW3_ENDPOINT;
+  ZbZclAddEndpoint(zigbee_app_info.zb, &req, &conf);
+  assert(conf.status == ZB_STATUS_SUCCESS);
+
+  /* Water content server */
+  zigbee_app_info.water_content_server_3 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW3_ENDPOINT, ZCL_CLUSTER_MEAS_SOIL_MOISTURE, HUMIDITY_MIN_3, HUMIDITY_MAX_3);
+  assert(zigbee_app_info.water_content_server_3 != NULL);
+  ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_3);
+  /* Endpoint: SW4_ENDPOINT */
+  req.profileId = ZCL_PROFILE_HOME_AUTOMATION;
+  req.deviceId = ZCL_DEVICE_SIMPLE_SENSOR;
+  req.endpoint = SW4_ENDPOINT;
+  ZbZclAddEndpoint(zigbee_app_info.zb, &req, &conf);
+  assert(conf.status == ZB_STATUS_SUCCESS);
+
+  /* Water content server */
+  zigbee_app_info.water_content_server_4 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW4_ENDPOINT, ZCL_CLUSTER_MEAS_SOIL_MOISTURE, HUMIDITY_MIN_4, HUMIDITY_MAX_4);
+  assert(zigbee_app_info.water_content_server_4 != NULL);
+  ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_4);
 
   /* USER CODE BEGIN CONFIG_ENDPOINT */
   ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, test++);
@@ -641,7 +681,10 @@ static void APP_ZIGBEE_CheckWirelessFirmwareInfo(void)
     APP_DBG("colorControl Server on Endpoint %d", SW1_ENDPOINT);
     APP_DBG("levelControl Server on Endpoint %d", SW1_ENDPOINT);
     APP_DBG("basic Client on Endpoint %d", SW2_ENDPOINT);
+    APP_DBG("temperature_meas Server on Endpoint %d", SW2_ENDPOINT);
     APP_DBG("water_content Server on Endpoint %d", SW2_ENDPOINT);
+    APP_DBG("water_content Server on Endpoint %d", SW3_ENDPOINT);
+    APP_DBG("water_content Server on Endpoint %d", SW4_ENDPOINT);
     APP_DBG("**********************************************************");
   }
 }
@@ -832,6 +875,14 @@ static void APP_ZIGBEE_ProcessRequestM0ToM4(void)
 }
 
 /* USER CODE BEGIN FD_LOCAL_FUNCTIONS */
+
+void APP_ZIGBEE_cyclic_reporting(struct APP_ZIGBEE_cyclic_data *data){
+  ZbZclAttrIntegerWrite(zigbee_app_info.temperature_meas_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->temperature);
+  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->humidity);
+  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_3, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_1);
+  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_4, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_2);
+}
+
 /**
  * @brief  Configure Zigbee Basic Server Cluster
  * @param  None

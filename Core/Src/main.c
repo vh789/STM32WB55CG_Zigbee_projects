@@ -67,6 +67,7 @@ uint16_t adc_buffer[3];									// hold ADC DMA values
 struct RGB_obj OBJ_RGB_LED = {0};						// Object for RGB LED Strip
 struct TEMP_HUMID_obj OBJ_TEMP_HUMID = {0};				// Object for temp/humidity sensor
 struct SOIL_MOIST_obj OBJ_SOIL_MOIST_sensor_1 = {0};	// Object for soil moisture sensor 1
+struct SOIL_MOIST_obj OBJ_SOIL_MOIST_sensor_2 = {0};	// Object for soil moisture sensor 1
 
 /* USER CODE END PV */
 
@@ -158,6 +159,7 @@ int main(void)
   //init_dht11(&dht11, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
   TEMP_HUMID_init(&OBJ_TEMP_HUMID, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
   SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_1, &adc_buffer[0]);
+  SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_2, &adc_buffer[1]);
   RGB_init(&OBJ_RGB_LED, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_4);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_buffer, 3);
 
@@ -170,14 +172,14 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Init code for STM32_WPAN */
-//  MX_APPE_Init();
+  MX_APPE_Init();
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-//    MX_APPE_Process();
+    MX_APPE_Process();
 
     /* USER CODE BEGIN 3 */
 

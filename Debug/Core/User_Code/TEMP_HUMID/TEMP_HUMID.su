@@ -1,2 +1,4 @@
 ../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:3:6:TEMP_HUMID_init	24	static
 ../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:8:6:TEMP_HUMID_read	16	static
+../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:25:11:TEMP_HUMID_get_temperature	24	static
+../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:30:11:TEMP_HUMID_get_humidity	24	static

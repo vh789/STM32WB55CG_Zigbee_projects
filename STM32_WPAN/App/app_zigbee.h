@@ -53,6 +53,12 @@ typedef enum
   ERR_ZIGBEE_CHECK_WIRELESS
 } ErrAppliIdEnum_t;
 /* USER CODE BEGIN ET */
+struct APP_ZIGBEE_cyclic_data{
+	long long temperature;
+	long long humidity;
+	long long soil_moisture_1;
+	long long soil_moisture_2;
+};
 
 /* USER CODE END ET */
 
@@ -79,7 +85,7 @@ void APP_ZIGBEE_RegisterCmdBuffer(TL_CmdPacket_t *p_buffer);
 void APP_ZIGBEE_TL_INIT(void);
 void Pre_ZigbeeCmdProcessing(void);
 /* USER CODE BEGIN EF */
-
+void APP_ZIGBEE_cyclic_reporting(struct APP_ZIGBEE_cyclic_data *data);
 /* USER CODE END EF */
 #ifdef __cplusplus
 } /* extern "C" */
