@@ -405,8 +405,6 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
      *          .enhanced_supported     //bool
      */
     /* USER CODE BEGIN Color Server Config (endpoint1) */
-	.capabilities = ZCL_COLOR_CAP_XY,
-
     /* USER CODE END Color Server Config (endpoint1) */
   };
   zigbee_app_info.colorControl_server_1 = ZbZclColorServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, zigbee_app_info.onOff_server_1, NULL, 0, &colorServerConfig_1, NULL);
@@ -432,7 +430,7 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   assert(zigbee_app_info.temperature_meas_server_2 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.temperature_meas_server_2);
   /* Water content server */
-  zigbee_app_info.water_content_server_2 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW2_ENDPOINT, ZCL_CLUSTER_MEAS_HUMIDITY, HUMIDITY_MIN_2, HUMIDITY_MAX_2);
+  zigbee_app_info.water_content_server_2 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, ZCL_CLUSTER_MEAS_HUMIDITY, HUMIDITY_MIN_2, HUMIDITY_MAX_2);
   assert(zigbee_app_info.water_content_server_2 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_2);
   /* Endpoint: SW3_ENDPOINT */
@@ -443,7 +441,7 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   assert(conf.status == ZB_STATUS_SUCCESS);
 
   /* Water content server */
-  zigbee_app_info.water_content_server_3 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW3_ENDPOINT, ZCL_CLUSTER_MEAS_SOIL_MOISTURE, HUMIDITY_MIN_3, HUMIDITY_MAX_3);
+  zigbee_app_info.water_content_server_3 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, ZCL_CLUSTER_MEAS_HUMIDITY, HUMIDITY_MIN_3, HUMIDITY_MAX_3);
   assert(zigbee_app_info.water_content_server_3 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_3);
   /* Endpoint: SW4_ENDPOINT */
@@ -454,7 +452,7 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   assert(conf.status == ZB_STATUS_SUCCESS);
 
   /* Water content server */
-  zigbee_app_info.water_content_server_4 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW4_ENDPOINT, ZCL_CLUSTER_MEAS_SOIL_MOISTURE, HUMIDITY_MIN_4, HUMIDITY_MAX_4);
+  zigbee_app_info.water_content_server_4 = ZbZclWaterContentMeasServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, ZCL_CLUSTER_MEAS_HUMIDITY, HUMIDITY_MIN_4, HUMIDITY_MAX_4);
   assert(zigbee_app_info.water_content_server_4 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_4);
 

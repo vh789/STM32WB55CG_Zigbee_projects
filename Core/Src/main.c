@@ -157,8 +157,8 @@ int main(void)
 
   // init DHT11
   //init_dht11(&dht11, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
-  TEMP_HUMID_init(&OBJ_TEMP_HUMID, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
-  SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_1, &adc_buffer[0]);
+  TEMP_HUMID_init(&OBJ_TEMP_HUMID, DHT22, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
+  SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_1, &adc_buffer[2]);
   SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_2, &adc_buffer[1]);
   RGB_init(&OBJ_RGB_LED, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_4);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_buffer, 3);
@@ -172,20 +172,16 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Init code for STM32_WPAN */
-  MX_APPE_Init();
+//  MX_APPE_Init();
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-    MX_APPE_Process();
+//    MX_APPE_Process();
 
     /* USER CODE BEGIN 3 */
-
-	HAL_Delay(500);
-//  printf("ADC1: %d, ADC2: %d, ADC3: %d\n", adc_buffer[0], adc_buffer[1], adc_buffer[2]);
-
 
   }
   /* USER CODE END 3 */
@@ -507,7 +503,7 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 32000-1;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 1000-1;
+  htim1.Init.Period = 10000-1;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;

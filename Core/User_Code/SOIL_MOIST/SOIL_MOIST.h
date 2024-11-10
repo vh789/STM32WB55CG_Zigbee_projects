@@ -10,4 +10,4 @@ struct SOIL_MOIST_obj{
 };
 
 void SOIL_MOIST_init(struct SOIL_MOIST_obj *obj, uint16_t *DMA_location);
-uint16_t SOIL_MOIST_get_moisture_percent(struct SOIL_MOIST_obj *obj);
+int16_t SOIL_MOIST_get_moisture_percent(struct SOIL_MOIST_obj *obj);

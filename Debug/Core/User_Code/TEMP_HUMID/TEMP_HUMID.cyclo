@@ -1,4 +1,4 @@
-../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:3:6:TEMP_HUMID_init	1
-../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:8:6:TEMP_HUMID_read	3
-../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:25:11:TEMP_HUMID_get_temperature	1
-../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:30:11:TEMP_HUMID_get_humidity	1
+../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:4:6:TEMP_HUMID_init	3
+../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:19:6:TEMP_HUMID_read	3
+../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:42:11:TEMP_HUMID_get_temperature	1
+../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:47:11:TEMP_HUMID_get_humidity	1

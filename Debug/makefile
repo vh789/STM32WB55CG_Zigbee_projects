@@ -18,7 +18,9 @@ RM := rm -rf
 -include Core/User_Code/SOIL_MOIST/subdir.mk
 -include Core/User_Code/RGB/subdir.mk
 -include Core/User_Code/ISR/subdir.mk
+-include Core/User_Code/DHT22/subdir.mk
 -include Core/User_Code/DHT11/subdir.mk
+-include Core/User_Code/DHT/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk

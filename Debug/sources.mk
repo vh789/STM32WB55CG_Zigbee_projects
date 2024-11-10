@@ -24,7 +24,9 @@ C_DEPS :=
 SUBDIRS := \
 Core/Src \
 Core/Startup \
+Core/User_Code/DHT \
 Core/User_Code/DHT11 \
+Core/User_Code/DHT22 \
 Core/User_Code/ISR \
 Core/User_Code/RGB \
 Core/User_Code/SOIL_MOIST \

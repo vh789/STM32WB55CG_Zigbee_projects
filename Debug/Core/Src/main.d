@@ -61,6 +61,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/app_entry.h ../Core/Inc/app_common.h \
  ../Core/Src/../User_Code/TEMP_HUMID/TEMP_HUMID.h \
  ../Core/Src/../User_Code/TEMP_HUMID/../DHT11/mk_dht11.h \
+ ../Core/Src/../User_Code/TEMP_HUMID/../DHT22/DHT22.h \
+ ../Core/Src/../User_Code/TEMP_HUMID/../DHT/DHT.h \
  ../Core/Src/../User_Code/SOIL_MOIST/SOIL_MOIST.h \
  ../Core/Src/../User_Code/RGB/RGB.h
 ../Core/Inc/main.h:
@@ -128,5 +130,7 @@ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HA
 ../Core/Inc/app_common.h:
 ../Core/Src/../User_Code/TEMP_HUMID/TEMP_HUMID.h:
 ../Core/Src/../User_Code/TEMP_HUMID/../DHT11/mk_dht11.h:
+../Core/Src/../User_Code/TEMP_HUMID/../DHT22/DHT22.h:
+../Core/Src/../User_Code/TEMP_HUMID/../DHT/DHT.h:
 ../Core/Src/../User_Code/SOIL_MOIST/SOIL_MOIST.h:
 ../Core/Src/../User_Code/RGB/RGB.h:
