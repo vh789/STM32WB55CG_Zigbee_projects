@@ -156,7 +156,6 @@ int main(void)
   printf("\n\n\nNew start\n");
 
   // init DHT11
-  //init_dht11(&dht11, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
   TEMP_HUMID_init(&OBJ_TEMP_HUMID, DHT22, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
   SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_1, &adc_buffer[0]);
   SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_2, &adc_buffer[1]);
@@ -172,14 +171,15 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Init code for STM32_WPAN */
-//  MX_APPE_Init();
+  MX_APPE_Init();
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-//    MX_APPE_Process();
+    MX_APPE_Process();
+    HAL_Delay(1000);
 
     /* USER CODE BEGIN 3 */
 
