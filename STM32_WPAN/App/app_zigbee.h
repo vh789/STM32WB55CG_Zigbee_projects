@@ -54,8 +54,8 @@ typedef enum
 } ErrAppliIdEnum_t;
 /* USER CODE BEGIN ET */
 struct APP_ZIGBEE_cyclic_data{
-	long long temperature;
-	long long humidity;
+	int16_t temperature;
+	int16_t humidity;
 	int16_t soil_moisture_1;
 	int16_t soil_moisture_2;
 };

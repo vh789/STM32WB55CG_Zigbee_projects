@@ -28,5 +28,5 @@
 ../STM32_WPAN/App/app_zigbee.c:838:6:APP_ZIGBEE_TL_INIT	8	static
 ../STM32_WPAN/App/app_zigbee.c:851:13:APP_ZIGBEE_ProcessNotifyM0ToM4	8	static
 ../STM32_WPAN/App/app_zigbee.c:866:13:APP_ZIGBEE_ProcessRequestM0ToM4	8	static
-../STM32_WPAN/App/app_zigbee.c:877:6:APP_ZIGBEE_cyclic_reporting	32	static
+../STM32_WPAN/App/app_zigbee.c:877:6:APP_ZIGBEE_cyclic_reporting	48	static
 ../STM32_WPAN/App/app_zigbee.c:889:6:APP_ZIGBEE_ConfigBasicServer	8	static

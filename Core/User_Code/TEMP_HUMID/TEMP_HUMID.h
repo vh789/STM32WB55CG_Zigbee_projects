@@ -17,6 +17,6 @@ void TEMP_HUMID_init(struct TEMP_HUMID_obj *obj, enum TEMP_HUMID_sensortype type
 
 void TEMP_HUMID_read(struct TEMP_HUMID_obj *obj);
 
-long long TEMP_HUMID_get_temperature(struct TEMP_HUMID_obj *obj);
+int16_t TEMP_HUMID_get_temperature(struct TEMP_HUMID_obj *obj);
 
-long long TEMP_HUMID_get_humidity(struct TEMP_HUMID_obj *obj);
+int16_t TEMP_HUMID_get_humidity(struct TEMP_HUMID_obj *obj);

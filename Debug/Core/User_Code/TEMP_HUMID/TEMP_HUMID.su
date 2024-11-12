@@ -1,4 +1,4 @@
 ../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:4:6:TEMP_HUMID_init	24	static
 ../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:19:6:TEMP_HUMID_read	24	static
-../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:42:11:TEMP_HUMID_get_temperature	24	static
-../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:47:11:TEMP_HUMID_get_humidity	24	static
+../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:39:9:TEMP_HUMID_get_temperature	24	static
+../Core/User_Code/TEMP_HUMID/TEMP_HUMID.c:47:9:TEMP_HUMID_get_humidity	24	static
