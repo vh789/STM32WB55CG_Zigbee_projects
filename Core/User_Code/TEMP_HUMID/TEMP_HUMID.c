@@ -25,9 +25,11 @@ void TEMP_HUMID_read(struct TEMP_HUMID_obj *obj){
 		break;
 	case DHT22:
 		DHT_DataTypedef data;
-		DHT_GetData(&data);
-		obj->temperature_degC = data.Temperature;
-		obj->humidity_percent = data.Humidity;
+		bool fb = DHT_GetData(&data);
+		if(fb){
+			obj->temperature_degC = data.Temperature;
+			obj->humidity_percent = data.Humidity;
+		}
 		break;
 	default:
 		obj->temperature_degC = 0.0f;

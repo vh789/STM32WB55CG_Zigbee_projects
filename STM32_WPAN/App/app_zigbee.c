@@ -61,14 +61,14 @@
 
 /* USER CODE BEGIN PD */
 #define HUMIDITY_MIN_2 0
-#define HUMIDITY_MAX_2 100
-#define TEMP_MIN_2 -20
-#define TEMP_MAX_2 100
+#define HUMIDITY_MAX_2 1000
+#define TEMP_MIN_2 -200
+#define TEMP_MAX_2 1000
 #define TEMP_TOLERANCE_2 1
 #define HUMIDITY_MIN_3 0
-#define HUMIDITY_MAX_3 100
+#define HUMIDITY_MAX_3 1000
 #define HUMIDITY_MIN_4 0
-#define HUMIDITY_MAX_4 100
+#define HUMIDITY_MAX_4 1000
 
 /* USER CODE END PD */
 
@@ -179,6 +179,8 @@ int test = 0;
 int test1 = 10;
 
 extern struct RGB_obj OBJ_RGB_LED;		// REGB object
+
+bool flag_joining_finished = false;
 
 /* USER CODE END PV */
 /* Functions Definition ------------------------------------------------------*/
@@ -406,6 +408,7 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
      */
     /* USER CODE BEGIN Color Server Config (endpoint1) */
 	.capabilities = ZCL_COLOR_CAP_XY,
+
     /* USER CODE END Color Server Config (endpoint1) */
   };
   zigbee_app_info.colorControl_server_1 = ZbZclColorServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, zigbee_app_info.onOff_server_1, NULL, 0, &colorServerConfig_1, NULL);
@@ -458,7 +461,7 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_4);
 
   /* USER CODE BEGIN CONFIG_ENDPOINT */
-  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, test++);
+  flag_joining_finished = true;
 
   /* USER CODE END CONFIG_ENDPOINT */
 }
@@ -504,6 +507,7 @@ static void APP_ZIGBEE_NwkForm(void)
       zigbee_app_info.init_after_join = true;
       APP_DBG("Startup done !\n");
       /* USER CODE BEGIN 5 */
+//      flag_joining_finished = true;
 
       /* USER CODE END 5 */
     }
@@ -876,11 +880,13 @@ static void APP_ZIGBEE_ProcessRequestM0ToM4(void)
 /* USER CODE BEGIN FD_LOCAL_FUNCTIONS */
 
 void APP_ZIGBEE_cyclic_reporting(struct APP_ZIGBEE_cyclic_data *data){
-  ZbZclAttrIntegerWrite(zigbee_app_info.temperature_meas_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->temperature);
+	if(flag_joining_finished){
+  ZbZclAttrIntegerWrite(zigbee_app_info.temperature_meas_server_2, ZCL_TEMP_MEAS_ATTR_MEAS_VAL, data->temperature);
   ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->humidity);
   ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_3, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_1);
   ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_4, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_2);
-}
+}}
+
 
 /**
  * @brief  Configure Zigbee Basic Server Cluster

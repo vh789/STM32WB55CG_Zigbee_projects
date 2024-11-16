@@ -134,7 +134,7 @@ uint8_t DHT_Read (void)
 
 
 
-void DHT_GetData (DHT_DataTypedef *DHT_Data)
+bool DHT_GetData (DHT_DataTypedef *DHT_Data)
 {
     DHT_Start ();
 	Presence = DHT_Check_Response ();
@@ -154,8 +154,11 @@ void DHT_GetData (DHT_DataTypedef *DHT_Data)
 		#if defined(TYPE_DHT22)
 			DHT_Data->Temperature = ((Temp_byte1<<8)|Temp_byte2);
 			DHT_Data->Humidity = ((Rh_byte1<<8)|Rh_byte2);
-			printf("internal temp %d, humd %d\n", (int16_t)(DHT_Data->Temperature), (int16_t)(DHT_Data->Humidity));
 		#endif
+			return true;
+	}
+	else{
+		return false;
 	}
 }
 

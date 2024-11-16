@@ -86,6 +86,7 @@ void APP_ZIGBEE_TL_INIT(void);
 void Pre_ZigbeeCmdProcessing(void);
 /* USER CODE BEGIN EF */
 void APP_ZIGBEE_cyclic_reporting(struct APP_ZIGBEE_cyclic_data *data);
+void APP_ZIGBEE_WriteTempAttribute(float temp_val);
 /* USER CODE END EF */
 #ifdef __cplusplus
 } /* extern "C" */
