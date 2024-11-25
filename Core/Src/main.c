@@ -156,10 +156,10 @@ int main(void)
   printf("\n\n\nNew start\n");
 
   // init DHT11
-  TEMP_HUMID_init(&OBJ_TEMP_HUMID, DHT22, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
+//  TEMP_HUMID_init(&OBJ_TEMP_HUMID, DHT22, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
   SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_1, &adc_buffer[0]);
   SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_2, &adc_buffer[1]);
-  RGB_init(&OBJ_RGB_LED, &htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_4);
+  RGB_init(&OBJ_RGB_LED, &htim2, TIM_CHANNEL_4, TIM_CHANNEL_1, TIM_CHANNEL_3);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_buffer, 3);
 
   if (HAL_TIM_Base_Start_IT(&htim1) != HAL_OK)

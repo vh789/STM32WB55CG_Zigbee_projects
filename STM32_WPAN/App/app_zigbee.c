@@ -61,14 +61,14 @@
 
 /* USER CODE BEGIN PD */
 #define HUMIDITY_MIN_2 0
-#define HUMIDITY_MAX_2 1000
-#define TEMP_MIN_2 -200
-#define TEMP_MAX_2 1000
+#define HUMIDITY_MAX_2 10000
+#define TEMP_MIN_2 -2000
+#define TEMP_MAX_2 10000
 #define TEMP_TOLERANCE_2 1
 #define HUMIDITY_MIN_3 0
-#define HUMIDITY_MAX_3 1000
+#define HUMIDITY_MAX_3 10000
 #define HUMIDITY_MIN_4 0
-#define HUMIDITY_MAX_4 1000
+#define HUMIDITY_MAX_4 10000
 
 /* USER CODE END PD */
 
@@ -101,8 +101,8 @@ static void APP_ZIGBEE_ProcessRequestM0ToM4(void);
 void APP_ZIGBEE_ConfigBasicServer(void);
 
 /* Defines for Basic Cluster Server */
-#define APP_ZIGBEE_MFR_NAME                         "Valentin"
-#define APP_ZIGBEE_CHIP_NAME                        "Valentin88"
+#define APP_ZIGBEE_MFR_NAME                         "vh789"
+#define APP_ZIGBEE_CHIP_NAME                        "stm32wb55cg"
 #define APP_ZIGBEE_CHIP_VERSION                     0x10        // Cut 1.0
 #define APP_ZIGBEE_BOARD_POWER                      0x00        // No Power
 
