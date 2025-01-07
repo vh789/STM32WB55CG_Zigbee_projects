@@ -1,8 +1,6 @@
 Core/User_Code/ISR/isr.o: ../Core/User_Code/ISR/isr.c \
  ../Core/User_Code/ISR/isr.h ../Core/User_Code/ISR/../SHARED_HEADER.h \
- ../Core/User_Code/ISR/../TEMP_HUMID/TEMP_HUMID.h \
- ../Core/User_Code/ISR/../TEMP_HUMID/../DHT11/mk_dht11.h \
- ../Core/Inc/main.h \
+ ../Core/User_Code/ISR/../HTU21/HTU21.h ../Core/Inc/main.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h \
  ../Core/Inc/stm32wbxx_hal_conf.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_dma.h \
@@ -63,8 +61,6 @@ Core/User_Code/ISR/isr.o: ../Core/User_Code/ISR/isr.c \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_gpio.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_rtc.h \
  ../Core/Inc/app_entry.h ../Core/Inc/app_common.h \
- ../Core/User_Code/ISR/../TEMP_HUMID/../DHT22/DHT22.h \
- ../Core/User_Code/ISR/../TEMP_HUMID/../DHT/DHT.h \
  ../Core/User_Code/ISR/../SOIL_MOIST/SOIL_MOIST.h \
  ../STM32_WPAN/App/app_zigbee.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h \
@@ -78,8 +74,7 @@ Core/User_Code/ISR/isr.o: ../Core/User_Code/ISR/isr.c \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h
 ../Core/User_Code/ISR/isr.h:
 ../Core/User_Code/ISR/../SHARED_HEADER.h:
-../Core/User_Code/ISR/../TEMP_HUMID/TEMP_HUMID.h:
-../Core/User_Code/ISR/../TEMP_HUMID/../DHT11/mk_dht11.h:
+../Core/User_Code/ISR/../HTU21/HTU21.h:
 ../Core/Inc/main.h:
 C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h:
 ../Core/Inc/stm32wbxx_hal_conf.h:
@@ -143,8 +138,6 @@ C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HA
 C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_rtc.h:
 ../Core/Inc/app_entry.h:
 ../Core/Inc/app_common.h:
-../Core/User_Code/ISR/../TEMP_HUMID/../DHT22/DHT22.h:
-../Core/User_Code/ISR/../TEMP_HUMID/../DHT/DHT.h:
 ../Core/User_Code/ISR/../SOIL_MOIST/SOIL_MOIST.h:
 ../STM32_WPAN/App/app_zigbee.h:
 C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h:

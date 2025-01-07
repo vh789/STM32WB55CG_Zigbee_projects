@@ -1,0 +1,7 @@
+../Core/User_Code/HTU21/HTU21.c:12:6:HTU21_init	1
+../Core/User_Code/HTU21/HTU21.c:18:6:HTU21_measure_temperature	1
+../Core/User_Code/HTU21/HTU21.c:23:6:HTU21_measure_humidity	1
+../Core/User_Code/HTU21/HTU21.c:28:9:HTU21_get_temperature	1
+../Core/User_Code/HTU21/HTU21.c:32:9:HTU21_get_humidity	1
+../Core/User_Code/HTU21/HTU21.c:37:17:HTU21_measure_and_read	1
+../Core/User_Code/HTU21/HTU21.c:45:14:HTU21_result_conversion	1

@@ -1,5 +1,5 @@
-Core/User_Code/DHT11/mk_dht11.o: ../Core/User_Code/DHT11/mk_dht11.c \
- ../Core/User_Code/DHT11/mk_dht11.h ../Core/Inc/main.h \
+Core/User_Code/HTU21/HTU21.o: ../Core/User_Code/HTU21/HTU21.c \
+ ../Core/User_Code/HTU21/../HTU21/HTU21.h ../Core/Inc/main.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h \
  ../Core/Inc/stm32wbxx_hal_conf.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_dma.h \
@@ -60,7 +60,7 @@ Core/User_Code/DHT11/mk_dht11.o: ../Core/User_Code/DHT11/mk_dht11.c \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_gpio.h \
  C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_rtc.h \
  ../Core/Inc/app_entry.h ../Core/Inc/app_common.h
-../Core/User_Code/DHT11/mk_dht11.h:
+../Core/User_Code/HTU21/../HTU21/HTU21.h:
 ../Core/Inc/main.h:
 C:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h:
 ../Core/Inc/stm32wbxx_hal_conf.h:

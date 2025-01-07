@@ -53,6 +53,7 @@
 /* Private defines -----------------------------------------------------------*/
 #define APP_ZIGBEE_STARTUP_FAIL_DELAY               500U
 #define CHANNEL                                     11
+#define ZED_SLEEP_TIME_30S                           1 /* 30s sleep time unit */
 
 #define SW1_ENDPOINT                                20
 #define SW2_ENDPOINT                                21
@@ -408,7 +409,6 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
      */
     /* USER CODE BEGIN Color Server Config (endpoint1) */
 	.capabilities = ZCL_COLOR_CAP_XY,
-
     /* USER CODE END Color Server Config (endpoint1) */
   };
   zigbee_app_info.colorControl_server_1 = ZbZclColorServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, zigbee_app_info.onOff_server_1, NULL, 0, &colorServerConfig_1, NULL);
@@ -485,7 +485,7 @@ static void APP_ZIGBEE_NwkForm(void)
     ZbStartupConfigGetProDefaults(&config);
 
     /* Set the centralized network */
-    APP_DBG("Network config : APP_STARTUP_CENTRALIZED_ROUTER");
+    APP_DBG("Network config : APP_STARTUP_CENTRALIZED_END_DEVICE");
     config.startupControl = zigbee_app_info.startupControl;
 
     /* Using the default HA preconfigured Link Key */
@@ -494,6 +494,10 @@ static void APP_ZIGBEE_NwkForm(void)
     config.channelList.count = 1;
     config.channelList.list[0].page = 0;
     config.channelList.list[0].channelMask = 1 << CHANNEL; /*Channel in use */
+
+    /* Add End device configuration */
+    config.capability &= ~(MCP_ASSOC_CAP_RXONIDLE | MCP_ASSOC_CAP_DEV_TYPE | MCP_ASSOC_CAP_ALT_COORD);
+    config.endDeviceTimeout=ZED_SLEEP_TIME_30S;
 
     /* Using ZbStartupWait (blocking) */
     status = ZbStartupWait(zigbee_app_info.zb, &config);
