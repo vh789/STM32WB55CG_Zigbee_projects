@@ -26,11 +26,11 @@ void HTU21_measure_humidity(struct HTU21_obj *obj){
 }
 
 int16_t HTU21_get_temperature(struct HTU21_obj *obj){
-	return ((int16_t)(obj->temperature_degC*10));
+	return ((int16_t)(obj->temperature_degC*100.0f));
 }
 
 int16_t HTU21_get_humidity(struct HTU21_obj *obj){
-	return ((int16_t)(obj->humidity_percent*10));
+	return ((int16_t)(obj->humidity_percent*100.0f));
 }
 
 

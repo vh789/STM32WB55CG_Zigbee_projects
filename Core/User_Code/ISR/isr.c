@@ -22,6 +22,6 @@ void cyclic_routine(void){
 	printf("Temperature: %d, Humidity: %d\n", data.temperature, data.humidity);
 	printf("Soil Moisture1: %d promille\n", data.soil_moisture_1);
 #endif
-//	APP_ZIGBEE_cyclic_reporting(&data);
+	APP_ZIGBEE_cyclic_reporting(&data);
 	HAL_GPIO_TogglePin(BOARD_LED_GPIO_Port, BOARD_LED_Pin);
 }

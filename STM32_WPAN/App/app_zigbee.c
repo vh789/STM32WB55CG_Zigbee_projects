@@ -53,7 +53,6 @@
 /* Private defines -----------------------------------------------------------*/
 #define APP_ZIGBEE_STARTUP_FAIL_DELAY               500U
 #define CHANNEL                                     11
-#define ZED_SLEEP_TIME_30S                           1 /* 30s sleep time unit */
 
 #define SW1_ENDPOINT                                20
 #define SW2_ENDPOINT                                21
@@ -180,8 +179,6 @@ int test = 0;
 int test1 = 10;
 
 extern struct RGB_obj OBJ_RGB_LED;		// REGB object
-
-bool flag_joining_finished = false;
 
 /* USER CODE END PV */
 /* Functions Definition ------------------------------------------------------*/
@@ -357,7 +354,7 @@ static void APP_ZIGBEE_StackLayersInit(void)
   APP_ZIGBEE_ConfigEndpoints();
 
   /* USER CODE BEGIN APP_ZIGBEE_StackLayersInit */
-  APP_ZIGBEE_ConfigBasicServer();
+//  APP_ZIGBEE_ConfigBasicServer();
 
   /* USER CODE END APP_ZIGBEE_StackLayersInit */
 
@@ -409,6 +406,7 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
      */
     /* USER CODE BEGIN Color Server Config (endpoint1) */
 	.capabilities = ZCL_COLOR_CAP_XY,
+
     /* USER CODE END Color Server Config (endpoint1) */
   };
   zigbee_app_info.colorControl_server_1 = ZbZclColorServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, zigbee_app_info.onOff_server_1, NULL, 0, &colorServerConfig_1, NULL);
@@ -461,7 +459,6 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   ZbZclClusterEndpointRegister(zigbee_app_info.water_content_server_4);
 
   /* USER CODE BEGIN CONFIG_ENDPOINT */
-  flag_joining_finished = true;
 
   /* USER CODE END CONFIG_ENDPOINT */
 }
@@ -485,7 +482,7 @@ static void APP_ZIGBEE_NwkForm(void)
     ZbStartupConfigGetProDefaults(&config);
 
     /* Set the centralized network */
-    APP_DBG("Network config : APP_STARTUP_CENTRALIZED_END_DEVICE");
+    APP_DBG("Network config : APP_STARTUP_CENTRALIZED_ROUTER");
     config.startupControl = zigbee_app_info.startupControl;
 
     /* Using the default HA preconfigured Link Key */
@@ -494,10 +491,6 @@ static void APP_ZIGBEE_NwkForm(void)
     config.channelList.count = 1;
     config.channelList.list[0].page = 0;
     config.channelList.list[0].channelMask = 1 << CHANNEL; /*Channel in use */
-
-    /* Add End device configuration */
-    config.capability &= ~(MCP_ASSOC_CAP_RXONIDLE | MCP_ASSOC_CAP_DEV_TYPE | MCP_ASSOC_CAP_ALT_COORD);
-    config.endDeviceTimeout=ZED_SLEEP_TIME_30S;
 
     /* Using ZbStartupWait (blocking) */
     status = ZbStartupWait(zigbee_app_info.zb, &config);
@@ -511,7 +504,6 @@ static void APP_ZIGBEE_NwkForm(void)
       zigbee_app_info.init_after_join = true;
       APP_DBG("Startup done !\n");
       /* USER CODE BEGIN 5 */
-//      flag_joining_finished = true;
 
       /* USER CODE END 5 */
     }
@@ -884,12 +876,11 @@ static void APP_ZIGBEE_ProcessRequestM0ToM4(void)
 /* USER CODE BEGIN FD_LOCAL_FUNCTIONS */
 
 void APP_ZIGBEE_cyclic_reporting(struct APP_ZIGBEE_cyclic_data *data){
-	if(flag_joining_finished){
   ZbZclAttrIntegerWrite(zigbee_app_info.temperature_meas_server_2, ZCL_TEMP_MEAS_ATTR_MEAS_VAL, data->temperature);
   ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->humidity);
   ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_3, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_1);
   ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_4, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_2);
-}}
+}
 
 
 /**
