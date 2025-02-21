@@ -69,7 +69,7 @@
 #define HUMIDITY_MAX_3 10000
 #define HUMIDITY_MIN_4 0
 #define HUMIDITY_MAX_4 10000
-
+#include "main.h"
 /* USER CODE END PD */
 
 /* Private macros ------------------------------------------------------------*/
@@ -196,6 +196,8 @@ static enum ZclStatusCodeT onOff_server_1_off(struct ZbZclClusterT *cluster, str
 	  {
 	    APP_DBG("LED_RED OFF");
 	    RGB_turn_off(&OBJ_RGB_LED);
+		HAL_GPIO_WritePin(BOARD_LED_GPIO_Port, BOARD_LED_Pin, false);
+
 		(void)ZbZclAttrIntegerWrite(cluster, ZCL_ONOFF_ATTR_ONOFF, 0);
 	  }
 	  else
@@ -218,6 +220,7 @@ static enum ZclStatusCodeT onOff_server_1_on(struct ZbZclClusterT *cluster, stru
 	  {
 	    APP_DBG("LED_RED ON");
 	    RGB_turn_on(&OBJ_RGB_LED);
+		HAL_GPIO_WritePin(BOARD_LED_GPIO_Port, BOARD_LED_Pin, true);
 	    (void)ZbZclAttrIntegerWrite(cluster, ZCL_ONOFF_ATTR_ONOFF, 1);
 	  }
 	  else
@@ -405,8 +408,7 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
      *          .enhanced_supported     //bool
      */
     /* USER CODE BEGIN Color Server Config (endpoint1) */
-	.capabilities = ZCL_COLOR_CAP_XY,
-
+    .capabilities = ZCL_COLOR_CAP_XY,
     /* USER CODE END Color Server Config (endpoint1) */
   };
   zigbee_app_info.colorControl_server_1 = ZbZclColorServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, zigbee_app_info.onOff_server_1, NULL, 0, &colorServerConfig_1, NULL);
@@ -876,10 +878,16 @@ static void APP_ZIGBEE_ProcessRequestM0ToM4(void)
 /* USER CODE BEGIN FD_LOCAL_FUNCTIONS */
 
 void APP_ZIGBEE_cyclic_reporting(struct APP_ZIGBEE_cyclic_data *data){
-  ZbZclAttrIntegerWrite(zigbee_app_info.temperature_meas_server_2, ZCL_TEMP_MEAS_ATTR_MEAS_VAL, data->temperature);
-  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->humidity);
-  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_3, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_1);
-  ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_4, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_2);
+	enum ZclStatusCodeT status[4];
+	status[0] = ZbZclAttrIntegerWrite(zigbee_app_info.temperature_meas_server_2, ZCL_TEMP_MEAS_ATTR_MEAS_VAL, data->temperature);
+	status[1] = ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_2, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->humidity);
+	status[2] = ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_3, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_1);
+	status[3] = ZbZclAttrIntegerWrite(zigbee_app_info.water_content_server_4, ZCL_WC_MEAS_ATTR_MEAS_VAL, data->soil_moisture_2);
+    printf("Cyclic Status: ");
+    printf("%d, " , status[0]);
+    printf("%d, " , status[1]);
+    printf("%d, " , status[2]);
+    printf("%d\n" , status[3]);
 }
 
 
