@@ -69,7 +69,7 @@ main-build: main_project.elf secondary-outputs
 
 # Tool invocations
 main_project.elf main_project.map: $(OBJS) $(USER_OBJS) C:\Users\valen\Documents\STM32WB55CG_Zigbee_projects\STM32WB55CGUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "main_project.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\valen\Documents\STM32WB55CG_Zigbee_projects\STM32WB55CGUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="main_project.map" -Wl,--gc-sections -static -LC:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/zigbee/lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "main_project.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\valen\Documents\STM32WB55CG_Zigbee_projects\STM32WB55CGUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="main_project.map" -Wl,--gc-sections -static -LC:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.20.0/Middlewares/ST/STM32_WPAN/zigbee/lib -LC:/Users/valen/STM32Cube/Repository/STM32Cube_FW_WB_V1.21.0/Middlewares/ST/STM32_WPAN/zigbee/lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
