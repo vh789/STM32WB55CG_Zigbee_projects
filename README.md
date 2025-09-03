@@ -2,6 +2,11 @@
 This Repo holds my trials with WeAct STM32WB55CG board. The applications focus on Zigbee - Homassistant - Zigbee2MQTT integration.
 Since I could not find much documentation about getting to run Zigbee with STM32WB55, and all examples focussed on the Nucleo board, I decided to share my project here.
 
+## Update
+The boards and Software works now fine and stable for half year.
+I will soon upload Schematics, PCB and Housing.
+If you have any questions or use cases, feel free to approach me.
+
 ## History
 As can be seen from [2,3], it was planned to integrate applications with this controller into Tuya Smarthome network. This proved not [6] and was not longer followed as target.
 Instead, the controller should now be integrated into a Homeassistant/Zigbee2MQTT network, which was successfull.
