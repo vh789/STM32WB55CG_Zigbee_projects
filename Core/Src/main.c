@@ -22,11 +22,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-//#include "../User_Code/RGB/RGB.h"
-#include "../User_Code/TEMP_HUMID/TEMP_HUMID.h"
+#include "../User_Code/HTU21/HTU21.h"
 #include "../User_Code/SOIL_MOIST/SOIL_MOIST.h"
 #include "../User_Code/RGB/RGB.h"
-
+#include "../User_Code/ISR/isr.h"
 
 /* USER CODE END Includes */
 
@@ -65,15 +64,20 @@ UART_HandleTypeDef huart1;
 uint16_t adc_buffer[3];									// hold ADC DMA values
 
 struct RGB_obj OBJ_RGB_LED = {0};						// Object for RGB LED Strip
-struct TEMP_HUMID_obj OBJ_TEMP_HUMID = {0};				// Object for temp/humidity sensor
+struct HTU21_obj OBJ_HTU21 = {0};						// Object for temp/humidity sensor
 struct SOIL_MOIST_obj OBJ_SOIL_MOIST_sensor_1 = {0};	// Object for soil moisture sensor 1
 struct SOIL_MOIST_obj OBJ_SOIL_MOIST_sensor_2 = {0};	// Object for soil moisture sensor 1
+
+/* HTU21D variables */
+
+
 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
+static void MX_RF_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_IPCC_Init(void);
@@ -84,7 +88,6 @@ static void MX_TIM2_Init(void);
 static void MX_TIM16_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
-static void MX_RF_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -101,7 +104,6 @@ int __io_putchar(int ch)
     return 1;
 }
 // check if necessary
-
 /* USER CODE END 0 */
 
 /**
@@ -140,6 +142,7 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  MX_RF_Init();
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_USART1_UART_Init();
@@ -149,14 +152,13 @@ int main(void)
   MX_TIM16_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
-  MX_RF_Init();
   /* USER CODE BEGIN 2 */
   // check if anything else necessary and to put to header/source
   setvbuf(stdout, NULL, _IONBF, 0); // disable stdio output buffering for printf command
   printf("\n\n\nNew start\n");
 
   // init DHT11
-//  TEMP_HUMID_init(&OBJ_TEMP_HUMID, DHT22, &htim16, TEMP_HUMID_GPIO_Port, TEMP_HUMID_Pin);
+  HTU21_init(&OBJ_HTU21, &hi2c1);
   SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_1, &adc_buffer[0]);
   SOIL_MOIST_init(&OBJ_SOIL_MOIST_sensor_2, &adc_buffer[1]);
   RGB_init(&OBJ_RGB_LED, &htim2, TIM_CHANNEL_4, TIM_CHANNEL_1, TIM_CHANNEL_3);
@@ -181,6 +183,15 @@ int main(void)
     MX_APPE_Process();
 
     /* USER CODE BEGIN 3 */
+    uint32_t timerValue = __HAL_TIM_GET_COUNTER(&htim1);
+    if (timerValue >= 10000-1) { // 10000 corresponds to the period set
+		// Reset the counter
+		__HAL_TIM_SET_COUNTER(&htim1, 0);
+
+		// Call your routine
+		cyclic_routine();
+	}
+
 
   }
   /* USER CODE END 3 */
