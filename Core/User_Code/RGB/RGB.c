@@ -6,7 +6,7 @@ extern TIM_HandleTypeDef htim2;
 
 void setPWM_normal_timer(TIM_HandleTypeDef timer, uint32_t channel, uint16_t pulse);
 uint16_t saturate_color(uint16_t in);
-struct RGB_colors xy_to_RGB(float x, float y, float brightness);
+struct RGB_colors xy_to_RGB(uint16_t x, uint16_t y, uint8_t brightness);
 void update_color_xy(struct RGB_obj *obj);
 
 void RGB_init(struct RGB_obj *obj, TIM_HandleTypeDef *timer, uint32_t channel_red, uint32_t channel_green, uint32_t channel_blue){
@@ -72,48 +72,61 @@ uint16_t saturate_color(uint16_t in){
 	}
 }
 
-//https://gist.github.com/popcorn245/30afa0f98eea1c2fd34d
-struct RGB_colors xy_to_RGB(float x, float y, float brightness){
-	float z = 1.0f - x - y;
-	float Y = brightness; // The given brightness value
-	float X = (Y / y) * x;
-	float Z = (Y / y) * z;
-	float r = X * 1.656492 - Y * 0.354851 - Z * 0.255038;
-	float g = -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
-	float b = X * 0.051713 - Y * 0.121364 + Z * 1.011530;
-	float max = 0.0f;
-	r = r <= 0.0031308f ? 12.92f * r : (1.0f + 0.055f) * pow(r, (1.0f / 2.4f)) - 0.055f;
-	g = g <= 0.0031308f ? 12.92f * g : (1.0f + 0.055f) * pow(g, (1.0f / 2.4f)) - 0.055f;
-	b = b <= 0.0031308f ? 12.92f * b : (1.0f + 0.055f) * pow(b, (1.0f / 2.4f)) - 0.055f;
+struct RGB_colors xy_to_RGB(uint16_t x, uint16_t y, uint8_t brightness) {
+    // Convert input to normalized float (0.0 – 1.0)
+    float fx = (float)x / 65535.0f;
+    float fy = (float)y / 65535.0f;
+    float fbrightness = (float)brightness / 255.0f;
 
-	if(r>g){
-		max = r;
-	}else{
-		max = g;
-	}
-	if(b>max){
-		max = b;
-	}
-	if(max>1.0f){
-	r = r/max;
-	g = g/max;
-	b = b/max;
-	}
+    // Avoid division by zero
+    if (fy <= 0.00001f) {
+        struct RGB_colors zero = {0, 0, 0};
+        return zero;
+    }
 
-	struct RGB_colors out = {
-		.r = MAX_BRIGHTNESS*r,
-		.g = MAX_BRIGHTNESS*g,
-		.b = MAX_BRIGHTNESS*b
-	};
-	return out;
+    // Compute XYZ
+    float fz = 1.0f - fx - fy;
+    float Y = fbrightness;
+    float X = (Y / fy) * fx;
+    float Z = (Y / fy) * fz;
+
+    // Convert XYZ to linear RGB using sRGB D65 matrix
+    float r =  3.2406f * X - 1.5372f * Y - 0.4986f * Z;
+    float g = -0.9689f * X + 1.8758f * Y + 0.0415f * Z;
+    float b =  0.0557f * X - 0.2040f * Y + 1.0570f * Z;
+
+    // Clamp negative values
+    if (r < 0.0f) r = 0.0f;
+    if (g < 0.0f) g = 0.0f;
+    if (b < 0.0f) b = 0.0f;
+
+    // Apply gamma correction (sRGB)
+    r = (r <= 0.0031308f) ? 12.92f * r : 1.055f * powf(r, 1.0f / 2.4f) - 0.055f;
+    g = (g <= 0.0031308f) ? 12.92f * g : 1.055f * powf(g, 1.0f / 2.4f) - 0.055f;
+    b = (b <= 0.0031308f) ? 12.92f * b : 1.055f * powf(b, 1.0f / 2.4f) - 0.055f;
+
+    // Normalize if any component is > 1.0
+    float max_val = fmaxf(fmaxf(r, g), b);
+    if (max_val > 1.0f) {
+        r /= max_val;
+        g /= max_val;
+        b /= max_val;
+    }
+
+    // Scale to 0–255 and round
+    struct RGB_colors out = {
+        .r = (uint8_t)(fminf(r * MAX_BRIGHTNESS, MAX_BRIGHTNESS)),
+        .g = (uint8_t)(fminf(g * MAX_BRIGHTNESS, MAX_BRIGHTNESS)),
+        .b = (uint8_t)(fminf(b * MAX_BRIGHTNESS, MAX_BRIGHTNESS))
+    };
+
+    return out;
 }
 
 void update_color_xy(struct RGB_obj *obj){
-	float x = 1.0f*obj->XY_col.x/0xFFFF;
-	float y = 1.0f*obj->XY_col.x/0xFFFF;
-	float brightness = 1.0f*obj->XY_col.brightness/0xFF;
-	struct RGB_colors RGB = xy_to_RGB(x, y, brightness);
+	struct RGB_colors RGB = xy_to_RGB(obj->XY_col.x, obj->XY_col.y, obj->XY_col.brightness);
 #ifdef DEGBUG_PRINTF
+    printf("x: %d, y: %d, Br: %d", obj->XY_col.x, obj->XY_col.y, obj->XY_col.brightness);
     printf("R: %d, G: %d, B: %d", RGB.r, RGB.g, RGB.b);
 #endif
 	RGB_set(obj, RGB);

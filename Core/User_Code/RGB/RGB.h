@@ -4,12 +4,12 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define MAX_BRIGHTNESS 100
+#define MAX_BRIGHTNESS 0xff
 
 struct XY_colors{
 	uint16_t x;
 	uint16_t y;
-	uint16_t brightness;
+	uint8_t brightness;
 };
 
 struct RGB_colors{
